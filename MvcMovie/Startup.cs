@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using MvcMovie.Models;
 
 namespace MvcMovie
 {
@@ -33,7 +35,13 @@ namespace MvcMovie
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-        }
+
+            // Add framework services.
+            services.AddMvc();
+
+            services.AddDbContext<MvcMovieContext>(options =>
+                  options.UseSqlite("Data Source=MvcMovie.db"));
+}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
